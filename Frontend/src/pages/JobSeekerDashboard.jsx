@@ -6,7 +6,11 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const JobSeekerDashboard = () => {
-  const userName = "Soham"; // Replace with dynamic user name in real app
+  const userName = localStorage.getItem('name'); // Replace with dynamic user name in real app
+  const splitName = (name)=>{
+    const username = name.trim().split(' ');
+    return username[0];
+  }
 
   return (
     <>
@@ -15,7 +19,7 @@ const JobSeekerDashboard = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row items-center justify-between mb-10">
           <div>
-            <h1 className="text-4xl font-extrabold text-gray-900">👋 Welcome, <span className="text-blue-700">{userName}</span></h1>
+            <h1 className="text-4xl font-extrabold text-gray-900">👋 Welcome, <span className="text-blue-700">{splitName(userName)}</span></h1>
             <p className="text-gray-600 text-base mt-2">Your inclusive career journey starts here.</p>
           </div>
         </div>

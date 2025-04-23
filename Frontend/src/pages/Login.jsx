@@ -1,15 +1,52 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = (e) => {
+const navigate = useNavigate()
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+   try {
+    const userLoginDetails = {
+      email:email,
+      password:password,
+    }
+    const response = await axios.post('http://localhost:5000/auth/seeker-login',userLoginDetails);
+
+    if(!response){
+     toast.error("Email is not registered")
+    }
+    toast.success("Login Successfully");
+    localStorage.setItem('token',response.data.jwtToken)
+    localStorage.setItem('name',response.data.name)
+    localStorage.setItem('email',response.data.email);
+    setTimeout(()=>{
+      navigate('/jobseeker/dashboard')
+    },1000)
+    console.log(response);
+    
+   } catch (error) {
+    
+    
+    if(error.response){
+      const errMas = error.response.data;
+      if(errMas && errMas.error && errMas.error.details){
+        toast.error(errMas.error.details[0].message)
+      }
+      else if(errMas.message){
+        toast.error(errMas.message)
+      }else{
+        toast.error("Login failed")
+      }
+    }else{
+      toast.error("Login failed")
+    }
+   }
   };
 
   return (
@@ -82,6 +119,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

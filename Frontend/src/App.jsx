@@ -13,6 +13,9 @@ import JobSeekerDashboard from './pages/JobSeekerDashboard';
 import SignLanguageChat from './pages/SignLanguageChat';
  import JobListings from './pages/JobListings';
  import CompanyRatings from './pages/CompanyRatings';
+import UserProtected from './components/UserProtected';
+import JobSeekerProfile from './pages/JobSeekerProfile';
+ 
 // import PostJob from './pages/PostJob';
 // import AccessibilityAudit from './pages/AccessibilityAudit';
 // import BadgeGenerator from './pages/BadgeGenerator';
@@ -33,12 +36,13 @@ function App() {
          <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/jobseeker/dashboard" element={<JobSeekerDashboard />} />
-        <Route path="/jobs" element={<JobListings />} />
-        <Route path="/company-ratings" element={<CompanyRatings />} />
-        <Route path="/job-chatbot" element={<JobMatchChatbot />} />
-        <Route path="/resume-optimizer" element={<ResumeOptimizer />} />
-        <Route path="/sign-chat" element={<SignLanguageChat />} />
+        <Route path="/jobseeker/dashboard" element={<UserProtected><JobSeekerDashboard /></UserProtected>} />
+        <Route path="/jobs" element={<UserProtected><JobListings/></UserProtected>} />
+        <Route path="/company-ratings" element={<UserProtected><CompanyRatings /></UserProtected>} />
+        <Route path="/job-chatbot" element={<UserProtected><JobMatchChatbot /></UserProtected>} />
+        <Route path="/resume-optimizer" element={<UserProtected><ResumeOptimizer /></UserProtected>} />
+        <Route path="/sign-chat" element={<UserProtected><SignLanguageChat /></UserProtected>} />
+        <Route path='/profile' element={<UserProtected><JobSeekerProfile /></UserProtected>}/>
        {/*} <Route path="/recruiter/dashboard" element={<RecruiterDashboard />} />
         
         
